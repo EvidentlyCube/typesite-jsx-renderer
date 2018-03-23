@@ -1,22 +1,22 @@
-import {Typesite, ContentFile, IMeta, ArgumentNullError} from 'typesite';
+import {ArgumentNullError, ContentFile, ContentFileCollection, IMeta, Typesite} from 'typesite';
 
 export class JsxContentsMeta implements IMeta {
-    private _render:(file:ContentFile, typesite:Typesite) => JSX.Element;
-    public contents:string;
+    private _render: (targetPath: string, file: ContentFile, files: ContentFileCollection, typesite: Typesite) => JSX.Element;
+    public contents: string;
 
     getKey(): string {
         return "jsxContents";
     }
 
-    constructor(render: (file:ContentFile, typesite:Typesite) => JSX.Element) {
-        if (!render){
+    constructor(render: (targetPath: string, file: ContentFile, files: ContentFileCollection, typesite: Typesite) => JSX.Element) {
+        if (!render) {
             throw new ArgumentNullError("render");
         }
 
         this._render = render;
     }
 
-    public render(file:ContentFile, typesite:Typesite): JSX.Element{
-        return this._render(file, typesite);
+    public render(targetPath: string, file: ContentFile, files: ContentFileCollection, typesite: Typesite): JSX.Element {
+        return this._render(targetPath, file, files, typesite);
     }
 }

@@ -23,9 +23,30 @@ describe("JsxRendererPlugin", () => {
         expect(file.getContents().toString()).to.equal("<div>This is content body</div>");
 
     });
+
+    it("Should pass all the params to the meta render", async () => {
+        const pathSource = "out.txt";
+        const fileSource = new ContentFile("test.txt", "");
+        const filesSource = new ContentFileCollection("");
+        const typesiteSource = new Typesite("", "");
+        const plugin = new JsxRendererPlugin(true);
+
+        filesSource.addFile(pathSource, fileSource);
+
+        fileSource.metadata.setItem(new JsxContentsMeta((path, file, files, typesite) => {
+            expect(path).to.equal(pathSource);
+            expect(file).to.equal(fileSource);
+            expect(files).to.equal(filesSource);
+            expect(typesite).to.equal(typesiteSource);
+
+            return <div>Test</div>;
+        }));
+
+        await plugin.run(filesSource, typesiteSource);
+    });
 });
 
-class TestJsxMeta extends JsxContentsMeta{
+class TestJsxMeta extends JsxContentsMeta {
     getKey(): string {
         return "testJsx";
     }

@@ -16,8 +16,8 @@ export class JsxRendererPlugin implements IPlugin {
     run(files: ContentFileCollection, typesite: Typesite): Promise<void> {
         return files.eachAsync((file, path) => {
             file.metadata.getAllItems().forEach(meta => {
-                if (meta instanceof JsxContentsMeta){
-                    this.renderMeta(meta, file, typesite);
+                if (meta instanceof JsxContentsMeta) {
+                    this.renderMeta(meta, path, file, files, typesite);
                 }
             });
 
@@ -27,8 +27,8 @@ export class JsxRendererPlugin implements IPlugin {
         });
     }
 
-    private renderMeta(meta: JsxContentsMeta, file: ContentFile, typesite: Typesite): void {
-        const contentJsx = meta.render(file, typesite);
+    private renderMeta(meta: JsxContentsMeta, targetPath: string, file: ContentFile, files: ContentFileCollection, typesite: Typesite): void {
+        const contentJsx = meta.render(targetPath, file, files, typesite);
 
         meta.contents = this.renderToString(contentJsx);
     }

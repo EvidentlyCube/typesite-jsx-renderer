@@ -20,7 +20,7 @@ Then add `JsxContentsMeta` to the frontmatter of whatever files you want to have
 
 ```typescript
 export default new Frontmatter(
-    new JsxContentsMeta((file:ContentFile, typesite:Typesite) => {
+    new JsxContentsMeta((path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => {
         return <div className="main-page">
             This will be my <strong>main</strong> content
         </div>;
@@ -46,8 +46,8 @@ export class JsxSummaryMeta extends JsxContentsMeta{
 ```typescript
 
 export default new Frontmatter(
-    new JsxContentsMeta((file:ContentFile, typesite:Typesite) => ...),
-    new JsxSummaryMeta((file:ContentFile, typesite:Typesite) => ...)
+    new JsxContentsMeta((path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => ...),
+    new JsxSummaryMeta((path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => ...)
 );
 ```
 
@@ -61,7 +61,7 @@ Please note that only `JsxContentsMeta`'s contents will be transferred to file's
 
 ## API
 
-### `JsxContentsMeta`
+### `JsxContentsPlugin`
 The plugin that does the filtering:
 
 #### `constructor`
@@ -73,5 +73,5 @@ Meta class that builds the JSX for the page's contents:
 
 #### `constructor`
 
- * `render: (file:ContentFile, typesite:Typesite) => JSX.Element` A function that expects `ContentFile` and `Typesite` and should return `JSX.Element` with the page's contents which will later be rendered to string.
+ * `render: (path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => JSX.Element` A function that expects file path, rendered file, files collection & typescite instace and should return `JSX.Element` with the page's contents which will later be rendered to string.
  * `contents:string` Rendered JSX
