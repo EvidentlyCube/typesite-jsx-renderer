@@ -1,6 +1,6 @@
 {
 	"name": "typesite-jsx-renderer",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"description": "Typesite plugin to render JSX to HTML",
 	"scripts": {
 		"build": "tsc",
@@ -39,7 +39,7 @@
 		"npm": "^5.7.1",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0",
-		"typesite": "^0.3.0"
+		"typesite": "^0.4.0"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.2",
