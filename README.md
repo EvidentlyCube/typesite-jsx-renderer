@@ -57,21 +57,25 @@ You can later access its contents as string with:
 file.metadata.getItem(JsxSummaryMeta).contents;
 ```
 
-Please note that only `JsxContentsMeta`'s contents will be transferred to file's contents. 
+**Important:** when you have multiple metas extending `JsxContentsMeta` only the base one will be transferred to `ContentFile`'s contents.
 
 ## API
 
 ### `JsxContentsPlugin`
-The plugin that does the filtering:
+The plugin responsible for rendering the JSX metas:
 
 #### `constructor`
 
- * `removeDataReactRoot :boolean` Controls wheteher to remove any and all `data-reactroot` attributes that might appear 
+ * **Argument** `removeDataReactRoot :boolean` Controls wheteher to remove any and all `data-reactroot` attributes that might appear 
  
 ### `JsxContentsMeta`
 Meta class that builds the JSX for the page's contents:
 
 #### `constructor`
 
- * `render: (path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => JSX.Element` A function that expects file path, rendered file, files collection & typescite instace and should return `JSX.Element` with the page's contents which will later be rendered to string.
- * `contents:string` Rendered JSX
+ * **Argument** `render: (path:string, file:ContentFile, files:ContentFileCollection, typesite:Typesite) => JSX.Element` A function that expects file path, rendered file, files collection & typescite instace and should return `JSX.Element` with the page's contents which will later be rendered to string.
+ * **Exception** `Typesite.ArgumentNullError` When `render` is null
+ * **Exception** `Typesite.ArgumentInvalidError` When `render` is not a function
+
+#### Properties
+ * `contents:string` The rendered JSX
